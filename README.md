@@ -1,2 +1,3 @@
-# Video-website
-Koa2 based video site
+# v-koa
+Koa2 based website
+
