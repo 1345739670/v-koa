@@ -1,0 +1,28 @@
+{
+  "name": "video-website",
+  "version": "0.0.1",
+  "description": "Koa2 based video site",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1345739670/Video-website.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1345739670/Video-website/issues"
+  },
+  "homepage": "https://github.com/1345739670/Video-website#readme",
+  "dependencies": {
+    "koa": "^2.5.2",
+    "nanoid": "^1.1.0",
+    "puppeteer": "^1.6.1",
+    "qiniu": "^7.2.1",
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
