@@ -19,6 +19,7 @@
   "homepage": "https://github.com/1345739670/Video-website#readme",
   "dependencies": {
     "bcrypt": "^3.0.0",
+    "glob": "^7.1.2",
     "koa": "^2.5.2",
     "mongoose": "^5.2.6",
     "nanoid": "^1.1.0",

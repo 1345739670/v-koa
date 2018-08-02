@@ -1,10 +1,19 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Mixed = Schema.Types.Mixed
-const db = 'mongodb://@localhost:27017/Vuetube'
+// Mixed适用于数据结构数据类型变化频繁的场景，可存储多种类型。
+const {Mixed, ObjectId} = Schema.Types
 
 const movieSchema = new Schema({
-  doubanId: String,
+  doubanId: {
+    unique: true,
+    type: String
+  },
+
+  category: {
+    type: ObjectId,
+    ref: 'Category'
+  },
+
   rate: Number,
   title: String,
   summary: String,
@@ -18,27 +27,29 @@ const movieSchema = new Schema({
 
   rawTitle: String,
   movieTypes: [String],
+  // 上映日期
   pubdate: Mixed,
   year: Number,
 
   tags: [String],
 
   meta: {
-    createdAt: Date,
-    default: Date.now()
-  },
-  updateAt: {
-    type: Date,
-    default: Date.now()
+    createdAt: {
+      type: Date,
+      default: Date.now()
+    },
+    updatedAt: {
+      type: Date,
+      default: Date.now()
+    }
   }
-
 })
 
 movieSchema.pre('save', next => {
   if (this.isNew) {
-    this.meta.createdAt = this.meta.updateAt = Date.now()
+    this.meta.createdAt = this.meta.updatedAt = Date.now()
   } else {
-    this.meta.updateAt = Date.now()
+    this.meta.updatedAt = Date.now()
   }
 
   next()

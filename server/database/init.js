@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
+const glob = require('glob')
+const { resolve } = require('path')
 const db = 'mongodb://@localhost:27017/Vuetube'
 // mongoose.connect("mongodb://username:password@localhost:27017/dbname", { useNewUrlParser: true })
 mongoose.Promise = global.Promise
+exports.initSchemas = () => {
+  glob.sync(resolve(__dirname, './schema', '**/*.js')).forEach(require)
+}
 
 exports.connect = () => {
   let maxConnectTimes = 0
