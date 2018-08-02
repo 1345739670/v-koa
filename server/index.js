@@ -6,11 +6,8 @@ const { connect,initSchemas } = require('./database/init')
 
     initSchemas()
 
-    const Movie = mongoose.model('Movie')
-
-    const movies = await Movie.find({})
-
-    console.log(movies)
+    // require('./tasks/movie')
+    require('./tasks/api')
     
 })()
 
@@ -18,4 +15,4 @@ const app = new Koa();
 app.use(async (ctx, next)=>{
     ctx.body = '电影首页'
 })
-app.listen(4545);
+app.listen(6357);

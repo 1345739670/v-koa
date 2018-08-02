@@ -1,5 +1,7 @@
 const cp = require('child_process')
 const { resolve } = require('path')
+const mongoose = require('mongoose')
+const Movie = mongoose.model('Movie')
 
 ;(async () => {
   const script= resolve(__dirname, '../crawler/trailer-list')
@@ -27,6 +29,17 @@ const { resolve } = require('path')
   child.on('message', data => {
       let result = data.result
 
-      console.log(result)
+      // console.log(result)
+      result.forEach(async item => {
+        // 查看数据库中是否有该数据
+        let movie = await Movie.findOne({
+          doubanId: item.doubanId
+        })
+        // 如果没有就保存
+        if (!movie) {
+          movie = new Movie(item)
+          await movie.save()
+        }
+      })
   })
 })()
