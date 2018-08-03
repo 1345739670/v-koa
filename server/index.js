@@ -1,26 +1,44 @@
 const Koa = require('koa');
+
+const mongoose = require('mongoose')
+
+const { resolve } = require('path');
 const { connect,initSchemas } = require('./database/init')
-const router = require('./router')
-const port = 9876;
+const R = require('ramda')
+const MIDDLEWARES = ['router']
+
+const port = 8536;
+
+const useMiddlewares = (app) => {
+  R.map(
+    R.compose(
+      R.forEachObjIndexed(
+        initWith => initWith(app)
+      ),
+      require,
+      name => resolve(__dirname, `./middlewares/${name}`)
+    )
+  )(MIDDLEWARES)
+}
+
 ;(async () => {
-    await connect()
+  await connect()
 
-    initSchemas()
+  initSchemas()
 
-    // require('./tasks/movie')
-    // require('./tasks/api')
-    
+  // require('./tasks/movie')
+  // require('./tasks/api')
+  const app = new Koa();
+  await useMiddlewares(app)
+  app.listen(port);
+  console.log(`Server running`);
+  
 })()
 
-const app = new Koa();
 
-app
-    .use(router.routes())
-    .use(router.allowedMethods())
 
-app.use(async (ctx, next)=>{
-    ctx.body = '电影首页'
-})
-app.listen(port);
+// app.use(async (ctx, next)=>{
+//   ctx.body = '电影首页'
+// })
 
 // console.log(`Server running at http://127.0.0.1:${port}/`);

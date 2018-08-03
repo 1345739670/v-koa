@@ -9,6 +9,7 @@ const LOCK_TIME = 2 * 60 * 60 * 1000
 const userSchema = new Schema({
   username: {
     unique: true,
+    required: true,
     type: String
   },
   email: {
@@ -67,7 +68,6 @@ userSchema.pre('save', function (next) {
     })
   })
 
-  next()
 })
 
 /**
@@ -102,7 +102,7 @@ userSchema.methods = {
           else reject(err)
         })
       } else {
-        let update = {
+        let updates = {
           $inc: {
             loginAttempts: 1
           }
